@@ -65,7 +65,7 @@ body::before {
 }
 
 .gradient-text {
-    background-image: linear-gradient(to right, #4E9DDD, #1A5A98);
+    background-image: linear-gradient(to right, #2dd4bf, #0d9488);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -116,7 +116,7 @@ input:hover, input:focus, select:hover, select:focus {
 }
 
 .btn-primary {
-    background: linear-gradient(to right, #0062cc, #007bff);
+    background: linear-gradient(to right, #0d9488, #14b8a6);
     border: none;
     transition: all .3s ease-in-out;
     font-size: 1.1rem;
@@ -124,7 +124,7 @@ input:hover, input:focus, select:hover, select:focus {
     border-radius: 30px;
     min-width: 180px;
     text-align: center;
-    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+    box-shadow: 0 4px 15px rgba(20, 184, 166, 0.3);
     font-weight: 600;
 }
 
@@ -141,7 +141,7 @@ input:hover, input:focus, select:hover, select:focus {
 
 .btn-action {
     background: rgba(40, 40, 40, 0.8);
-    border: 1px solid rgba(78, 157, 221, 0.5);
+    border: 1px solid rgba(20, 184, 166, 0.5);
 }
 
 .btn:hover {
@@ -157,18 +157,34 @@ input:hover, input:focus, select:hover, select:focus {
 }
 
 footer {
-    position: fixed;
+    position: relative;
     left: 0;
     bottom: 0;
     width: 100%;
     color: white;
     text-align: center;
-    padding: 10px 0;
+    padding: 20px 0;
+    margin-top: 40px;
+    background: rgba(18, 18, 18, 0.8);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(20, 184, 166, 0.3);
 }
 
 footer p {
-    margin-top: 5px;
-    margin-bottom: 0;
+    margin: 5px 0;
+    font-size: 0.9rem;
+}
+
+footer a {
+    color: #2dd4bf;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+footer a:hover {
+    color: #14b8a6;
+    text-decoration: underline;
 }
 
 .margin-div {
@@ -190,7 +206,7 @@ footer p {
     font-weight: 600;
     font-size: 1.8rem;
     margin-bottom: 1.2rem;
-    border-bottom: 2px solid rgba(78, 157, 221, 0.3);
+    border-bottom: 2px solid rgba(20, 184, 166, 0.3);
     padding-bottom: 0.8rem;
     display: flex;
     align-items: center;
@@ -207,7 +223,7 @@ footer p {
     font-family: 'Font Awesome 6 Free';
     font-weight: 900;
     margin-right: 12px;
-    color: #4E9DDD;
+    color: #14b8a6;
     font-size: 1.4rem;
 }
 
@@ -220,7 +236,6 @@ footer p {
     margin: 10px;
     padding: 10px;
     border-radius: 12px;
-/*    border-left: 3px solid #4E9DDD;*/
     animation: fadeIn 0.5s ease;
 }
 
@@ -236,11 +251,6 @@ footer p {
     margin-bottom: 10px;
     margin-top: 10px;
     border-radius: 12px;
-    /*background-color: rgba(16, 16, 24, 0.9);
-    scrollbar-width: thin;
-    scrollbar-color: #4e9ddd rgba(40, 40, 50, 0.7);
-    font-size: 15px;
-    line-height: 1.6;*/
 }
 
 #output::-webkit-scrollbar {
@@ -253,15 +263,14 @@ footer p {
 }
 
 #output::-webkit-scrollbar-thumb {
-    background-color: #4e9ddd;
+    background-color: #14b8a6;
     border-radius: 10px;
 }
 
 #reportContainer {
-    font-family: 'Georgia', 'Times New Roman', Times, "Courier New", serif;
+    font-family: Georgia, 'Times New Roman', serif;
     font-size: 18px !important;
-    background-color: rgba(255, 255, 255, 0.1);
-    font-family: 'Times New Roman', Times, "Courier New", serif;
+    background-color: transparent;
     border: none;
     color: #fff;
     transition: all .3s ease-in-out;
@@ -276,7 +285,7 @@ footer p {
 }
 
 #reportContainer a {
-    color: #7DC7FF;
+    color: #2dd4bf;
     text-decoration: none;
 }
 
@@ -285,7 +294,7 @@ footer p {
 }
 
 #reportContainer blockquote {
-    border-left: 3px solid #4e9ddd;
+    border-left: 3px solid #14b8a6;
     padding-left: 15px;
     color: #B8B8B8;
     font-style: italic;
@@ -301,7 +310,7 @@ footer p {
 }
 
 .tag {
-    background-color: #007bff;
+    background-color: #14b8a6;
     color: white;
     padding: 5px 10px;
     border-radius: 3px;
@@ -321,111 +330,12 @@ footer p {
     flex-grow: 1;
 }
 
-footer a {
-    color: #14b8a6;
-    font-weight: bold;
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
-    color: #0d9488;
-}
-
-/* Images container styles */
-#selectedImagesContainer {
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    padding: 15px;
-    margin-bottom: 20px;
-    color: #fff;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    justify-content: center;
-}
-
-#selectedImagesContainer h3 {
-    width: 100%;
-    margin-top: 0;
-    margin-bottom: 10px;
-    color: #fff;
-}
-
-#selectedImagesContainer img {
-    width: 150px;
-    height: 150px;
-    object-fit: cover;
-    cursor: pointer;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border-radius: 8px;
-}
-
-#selectedImagesContainer img:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.image-dialog {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-}
-
-.image-dialog img {
-    max-width: 90%;
-    max-height: 80%;
-    object-fit: contain;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.image-dialog button {
-    margin-top: 20px;
-    padding: 10px 25px;
-    background: linear-gradient(to right, #4E9DDD, #1A5A98);
-    color: #FFFFFF;
-    border: none;
-    border-radius: 30px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: all 0.3s ease;
-}
-
-.image-dialog button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-}
-
-/* Alert styling */
-.alert-info {
-    background-color: rgba(30, 30, 30, 0.7);
-    color: #E4E4E4;
-    border: 1px solid rgba(78, 157, 221, 0.3);
-    border-left: 4px solid #4E9DDD;
-}
-
-textarea#task {
-    min-height: 38px;
-    overflow-y: hidden;
-    resize: none;
-}
-
-/* Top Credits Bar */
 .credits-bar {
     background: rgba(18, 18, 18, 0.8);
     backdrop-filter: blur(10px);
     padding: 8px 0;
     width: 100%;
-    border-bottom: 1px solid rgba(78, 157, 221, 0.3);
+    border-bottom: 1px solid rgba(20, 184, 166, 0.3);
     z-index: 100;
 }
 
@@ -466,8 +376,8 @@ textarea#task {
     gap: 8px;
     padding: 6px 14px;
     border-radius: 20px;
-    background: rgba(78, 157, 221, 0.2);
-    color: #7DC7FF;
+    background: rgba(20, 184, 166, 0.2);
+    color: #2dd4bf;
     font-weight: 500;
     font-size: 0.9rem;
     cursor: pointer;
@@ -477,7 +387,7 @@ textarea#task {
 }
 
 .top-history-button:hover {
-    background: rgba(78, 157, 221, 0.3);
+    background: rgba(20, 184, 166, 0.3);
     transform: translateY(-2px);
 }
 
@@ -492,8 +402,8 @@ textarea#task {
     gap: 8px;
     padding: 6px 14px;
     border-radius: 20px;
-    background: rgba(78, 174, 221, 0.2);
-    color: #4EAEDD;
+    background: rgba(20, 184, 166, 0.2);
+    color: #2dd4bf;
     font-weight: 500;
     font-size: 0.9rem;
     cursor: pointer;
@@ -504,7 +414,7 @@ textarea#task {
 }
 
 .top-websocket-button:hover {
-    background: rgba(78, 174, 221, 0.3);
+    background: rgba(20, 184, 166, 0.3);
     transform: translateY(-2px);
 }
 
@@ -547,23 +457,23 @@ textarea#task {
 }
 
 .feature-panel::-webkit-scrollbar-thumb {
-    background-color: #4e9ddd;
+    background-color: #14b8a6;
     border-radius: 10px;
 }
 
 .feature-card {
-    background: rgba(20, 20, 30, 0.4); /* Even more transparent */
-    backdrop-filter: blur(5px); /* Lighter blur for better blending */
+    background: rgba(20, 20, 30, 0.4);
+    backdrop-filter: blur(5px);
     border-radius: 16px;
     padding: 25px;
     margin-bottom: 20px;
-    border: 1px solid rgba(78, 157, 221, 0.1); /* Even more subtle border */
-    border-left: 3px solid; /* Slightly thinner accent border */
+    border: 1px solid rgba(20, 184, 166, 0.1);
+    border-left: 3px solid;
     transition: all 0.3s ease;
     cursor: pointer;
     min-height: 160px;
     width: 100%;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08); /* Even lighter shadow */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
     position: relative;
     overflow: hidden;
 }
@@ -584,14 +494,14 @@ textarea#task {
 
 .feature-card:hover {
     transform: translateY(-5px);
-    background: rgba(30, 30, 40, 0.6); /* More transparent on hover too */
+    background: rgba(30, 30, 40, 0.6);
     box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
-    border-color: rgba(78, 157, 221, 0.25);
+    border-color: rgba(20, 184, 166, 0.25);
 }
 
 /* Adjust card colors to match background better */
 .feature-card.primary {
-    border-left-color: rgba(78, 157, 221, 0.7); /* More transparent colors */
+    border-left-color: rgba(20, 184, 166, 0.7);
 }
 
 .feature-card.success {
@@ -599,7 +509,7 @@ textarea#task {
 }
 
 .feature-card.info {
-    border-left-color: rgba(78, 174, 221, 0.7);
+    border-left-color: rgba(20, 184, 166, 0.7);
 }
 
 .feature-card.warning {
@@ -614,13 +524,13 @@ textarea#task {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 60px; /* Increased from 50px */
-    height: 60px; /* Increased from 50px */
-    border-radius: 15px; /* Increased from 12px */
-    margin-bottom: 18px; /* Increased from 15px */
-    font-size: 26px; /* Increased from 22px */
+    width: 60px;
+    height: 60px;
+    border-radius: 15px;
+    margin-bottom: 18px;
+    font-size: 26px;
     color: #FFF;
-    position: relative; /* Needed for the ::after pseudo-element */
+    position: relative;
 }
 
 .feature-icon::after {
@@ -631,7 +541,7 @@ textarea#task {
     width: 100%;
     height: 100%;
     background: rgba(255, 255, 255, 0.1);
-    border-radius: 15px; /* Match the parent */
+    border-radius: 15px;
     transform: scale(0);
     transition: transform 0.3s ease;
 }
@@ -641,7 +551,7 @@ textarea#task {
 }
 
 .feature-card.primary .feature-icon {
-    background: linear-gradient(135deg, #4E9DDD, #2C7BBF);
+    background: linear-gradient(135deg, #14b8a6, #0d9488);
 }
 
 .feature-card.success .feature-icon {
@@ -649,7 +559,7 @@ textarea#task {
 }
 
 .feature-card.info .feature-icon {
-    background: linear-gradient(135deg, #4EAEDD, #2C7BBF);
+    background: linear-gradient(135deg, #14b8a6, #0d9488);
 }
 
 .feature-card.warning .feature-icon {
@@ -662,15 +572,15 @@ textarea#task {
 
 .feature-title {
     font-weight: 600;
-    font-size: 20px; /* Increased from 18px */
-    margin-bottom: 12px; /* Increased from 10px */
+    font-size: 20px;
+    margin-bottom: 12px;
     color: #FFF;
 }
 
 .feature-text {
     color: #CCC;
-    font-size: 15px; /* Increased from 14px */
-    line-height: 1.6; /* Increased from 1.5 */
+    font-size: 15px;
+    line-height: 1.6;
 }
 
 .feature-card::after {
@@ -751,24 +661,24 @@ textarea#task {
 
 /* Button glow effect for feature cards interaction */
 .highlight-glow-button {
-    box-shadow: 0 0 25px 10px rgba(78, 157, 221, 0.7) !important;
-    border-color: rgba(78, 157, 221, 0.9) !important;
+    box-shadow: 0 0 25px 10px rgba(20, 184, 166, 0.7) !important;
+    border-color: rgba(20, 184, 166, 0.9) !important;
     transform: translateY(-3px) !important;
     transition: all 0.3s ease !important;
 }
 
 /* Intensify highlight glows for feature-panel interactions */
 .highlight-glow-container {
-    box-shadow: 0 0 30px 15px rgba(78, 174, 221, 0.6) !important;
-    border: 1px solid rgba(78, 174, 221, 0.8) !important;
+    box-shadow: 0 0 30px 15px rgba(20, 184, 166, 0.6) !important;
+    border: 1px solid rgba(20, 184, 166, 0.8) !important;
 }
 .highlight-glow-report_source,
 .highlight-glow-query_domains {
     box-shadow: 0 0 20px 10px rgba(78, 221, 152, 0.7) !important;
 }
 .highlight-glow-tone {
-    box-shadow: 0 0 20px 10px rgba(78, 157, 221, 0.7) !important;
-    border: 1px solid rgba(78, 157, 221, 0.8) !important;
+    box-shadow: 0 0 20px 10px rgba(20, 184, 166, 0.7) !important;
+    border: 1px solid rgba(20, 184, 166, 0.8) !important;
 }
 
 /* Ensure subtle transitions for all glows */
@@ -782,33 +692,7 @@ textarea#task {
 
 /* Scroll to bottom button */
 .scroll-to-bottom {
-    position: fixed;
-    bottom: 90px;
-    left: 50%; /* Center horizontally */
-    transform: translateX(-50%); /* Center horizontally */
-    right: auto; /* Override any right positioning */
-    background: linear-gradient(135deg, #4E9DDD, #2C7BBF);
-    width: 70px; /* Bigger */
-    height: 70px; /* Bigger */
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #FFF;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    cursor: pointer;
-    opacity: 1;
-    transition: all 0.3s ease;
-    z-index: 1000;
-}
-
-.scroll-to-bottom:hover {
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-    transform: translateX(-50%) translateY(-5px); /* Keep centered while lifting */
-}
-
-.scroll-to-bottom i {
-    font-size: 28px; /* Bigger icon */
+    display: none !important;
 }
 
 /* Responsive adjustments */
@@ -825,7 +709,7 @@ textarea#task {
 /* Medium devices (tablets, less than 1400px) */
 @media (max-width: 1399px) {
     .feature-panel {
-        display: none !important; /* Always hide feature panels on medium devices */
+        display: none !important;
     }
 }
 
@@ -839,7 +723,7 @@ textarea#task {
     }
 
     .landing {
-        margin-top: 50px; /* Add space below the top bar */
+        margin-top: 50px;
     }
 
     .container {
@@ -862,7 +746,6 @@ textarea#task {
         bottom: 70px;
     }
 
-    /* Credits bar and history button adjustments */
     .credits-content {
         flex-wrap: wrap;
         justify-content: center;
@@ -879,7 +762,6 @@ textarea#task {
         margin: 5px;
     }
 
-    /* Sticky downloads bar adjustments */
     .sticky-downloads-bar {
         padding: 8px 10px;
         bottom: 50px;
@@ -890,7 +772,6 @@ textarea#task {
         font-size: 0.85rem;
     }
 
-    /* History panel adjustments */
     .history-panel {
         width: 100%;
     }
@@ -901,13 +782,12 @@ textarea#task {
         top: auto;
     }
 
-    /* For mobile, stack the download panels at the bottom of the screen */
     .download-panel {
         position: fixed;
         top: auto;
         left: 0;
         right: 0;
-        bottom: 60px; /* Position above footer */
+        bottom: 60px;
         width: 100%;
         transform: none;
         padding: 0 15px;
@@ -922,9 +802,8 @@ textarea#task {
         max-width: 300px;
     }
 
-    /* Only show one panel at a time on mobile */
     .download-panel-right {
-        bottom: 180px; /* Position above the left panel */
+        bottom: 180px;
     }
 
     .download-card {
@@ -942,7 +821,7 @@ textarea#task {
     }
 
     .feature-panel {
-        width: 100%; /* Full width on small screens */
+        width: 100%;
         max-width: none;
         left: 0;
         right: 0;
@@ -951,7 +830,7 @@ textarea#task {
 
     .feature-card {
         padding: 18px;
-        min-height: auto; /* Let it grow with content */
+        min-height: auto;
     }
 }
 
@@ -966,8 +845,8 @@ textarea#task {
     width: 24px;
     height: 24px;
     border-radius: 50%;
-    border: 3px solid rgba(78, 157, 221, 0.3);
-    border-top-color: #4E9DDD;
+    border: 3px solid rgba(20, 184, 166, 0.3);
+    border-top-color: #14b8a6;
     vertical-align: middle;
     margin-right: 12px;
 }
@@ -983,7 +862,7 @@ textarea#task {
     font-family: 'Font Awesome 6 Free';
     font-weight: 900;
     margin-right: 12px;
-    color: #4E9DDD;
+    color: #14b8a6;
     font-size: 1.4rem;
 }
 
@@ -992,8 +871,8 @@ textarea#task {
     width: 100px;
     height: 100px;
     border-radius: 10px;
-    border: 2px solid #4E9DDD;
-    box-shadow: 0 0 15px rgba(78, 157, 221, 0.5);
+    border: 2px solid #14b8a6;
+    box-shadow: 0 0 15px rgba(20, 184, 166, 0.5);
 }
 
 .agent-name {
@@ -1026,7 +905,7 @@ textarea#task {
     left: 0;
     width: 100%;
     height: 100%;
-    background: none; /* Remove the gradient background */
+    background: none;
     z-index: -1;
     opacity: var(--panel-depth, 0.5);
     transition: opacity 0.4s ease;
@@ -1034,7 +913,7 @@ textarea#task {
 }
 
 .feature-panel:hover::before {
-    opacity: 0; /* Make completely transparent on hover */
+    opacity: 0;
 }
 
 /* Add a subtle corner glow on hover */
@@ -1073,7 +952,7 @@ textarea#task {
     height: calc(100vh - 40px);
     background: rgba(18, 18, 24, 0.95);
     backdrop-filter: blur(10px);
-    border-left: 1px solid rgba(78, 157, 221, 0.3);
+    border-left: 1px solid rgba(20, 184, 166, 0.3);
     z-index: 1000;
     display: flex;
     flex-direction: column;
@@ -1091,7 +970,7 @@ textarea#task {
     justify-content: space-between;
     align-items: center;
     padding: 20px;
-    border-bottom: 1px solid rgba(78, 157, 221, 0.3);
+    border-bottom: 1px solid rgba(20, 184, 166, 0.3);
 }
 
 .history-panel-header h3 {
@@ -1104,7 +983,7 @@ textarea#task {
 
 .history-panel-header h3 i {
     margin-right: 10px;
-    color: #4E9DDD;
+    color: #14b8a6;
 }
 
 .history-panel-actions {
@@ -1126,13 +1005,13 @@ textarea#task {
 }
 
 .history-action-btn:hover {
-    background: rgba(78, 157, 221, 0.2);
+    background: rgba(20, 184, 166, 0.2);
     color: #FFFFFF;
 }
 
 .history-panel-search, .history-panel-filters {
     padding: 15px;
-    border-bottom: 1px solid rgba(78, 157, 221, 0.2);
+    border-bottom: 1px solid rgba(20, 184, 166, 0.2);
     display: flex;
     align-items: center;
 }
@@ -1140,7 +1019,7 @@ textarea#task {
 .history-panel-search input {
     flex: 1;
     background: rgba(30, 30, 40, 0.8);
-    border: 1px solid rgba(78, 157, 221, 0.3);
+    border: 1px solid rgba(20, 184, 166, 0.3);
     border-radius: 20px;
     padding: 8px 15px;
     color: #E4E4E4;
@@ -1154,13 +1033,13 @@ textarea#task {
 .history-panel-filters select {
     flex: 1;
     background: rgba(30, 30, 40, 0.8);
-    border: 1px solid rgba(78, 157, 221, 0.3);
+    border: 1px solid rgba(20, 184, 166, 0.3);
     border-radius: 20px;
     padding: 8px 15px;
     color: #E4E4E4;
     font-size: 0.9rem;
     appearance: none;
-    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234E9DDD' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2314b8a6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
     background-repeat: no-repeat;
     background-position: right 10px center;
     background-size: 15px;
@@ -1174,7 +1053,7 @@ textarea#task {
     flex-direction: column;
     gap: 12px;
     scrollbar-width: thin;
-    scrollbar-color: #4e9ddd rgba(40, 40, 50, 0.7);
+    scrollbar-color: #14b8a6 rgba(40, 40, 50, 0.7);
 }
 
 .history-panel-entries::-webkit-scrollbar {
@@ -1187,7 +1066,7 @@ textarea#task {
 }
 
 .history-panel-entries::-webkit-scrollbar-thumb {
-    background-color: #4e9ddd;
+    background-color: #14b8a6;
     border-radius: 10px;
 }
 
@@ -1195,7 +1074,7 @@ textarea#task {
     background: rgba(30, 30, 40, 0.6);
     border-radius: 10px;
     padding: 15px;
-    border-left: 3px solid #4E9DDD;
+    border-left: 3px solid #14b8a6;
     transition: all 0.2s ease;
     cursor: pointer;
     animation: fadeInRight 0.3s ease forwards;
@@ -1267,7 +1146,7 @@ textarea#task {
 
 .history-entry-action {
     background: rgba(40, 40, 50, 0.8);
-    border: 1px solid rgba(78, 157, 221, 0.3);
+    border: 1px solid rgba(20, 184, 166, 0.3);
     border-radius: 6px;
     padding: 5px 10px;
     font-size: 0.75rem;
@@ -1280,8 +1159,8 @@ textarea#task {
 }
 
 .history-entry-action:hover {
-    background: rgba(78, 157, 221, 0.2);
-    border-color: #4E9DDD;
+    background: rgba(20, 184, 166, 0.2);
+    border-color: #14b8a6;
     color: #FFFFFF;
 }
 
@@ -1307,7 +1186,7 @@ textarea#task {
 }
 
 .history-entry-format span i {
-    color: #4E9DDD;
+    color: #14b8a6;
 }
 
 .history-entry-details {
@@ -1317,7 +1196,7 @@ textarea#task {
 }
 
 .history-entry.expanded .history-entry-details {
-    max-height: 200px; /* Adjust based on expected content */
+    max-height: 200px;
     margin-top: 10px;
 }
 
@@ -1330,11 +1209,11 @@ textarea#task {
 .history-panel-toggle {
     position: fixed;
     top: 100px;
-    right: 30px; /* Right side to match panel position */
-    left: auto; /* Override any left positioning */
+    right: 30px;
+    left: auto;
     width: 70px;
     height: 70px;
-    background: linear-gradient(135deg, #4E9DDD, #2C7BBF);
+    background: linear-gradient(135deg, #14b8a6, #0d9488);
     border-radius: 15px;
     display: flex;
     flex-direction: column;
@@ -1363,7 +1242,6 @@ textarea#task {
     font-weight: 500;
 }
 
-/* Responsive Adjustments for History Panel */
 @media (max-width: 768px) {
     .history-panel {
         width: 100%;
@@ -1382,23 +1260,22 @@ textarea#task {
     }
 }
 
-/* Sticky Downloads Bar */
 .sticky-downloads-bar {
-    position: fixed !important; /* Force fixed positioning */
+    position: fixed !important;
     bottom: 0 !important;
     left: 0 !important;
     width: 100% !important;
     height: auto !important;
     background: rgba(18, 18, 18, 0.8) !important;
     backdrop-filter: blur(10px) !important;
-    z-index: 9999 !important; /* Extremely high z-index to ensure it's on top */
+    z-index: 9999 !important;
     padding: 8px 0 !important;
-    display: none !important; /* Hidden by default */
+    display: none !important;
     justify-content: center !important;
-    border-top: 1px solid rgba(78, 157, 221, 0.3) !important;
+    border-top: 1px solid rgba(20, 184, 166, 0.3) !important;
     box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.3) !important;
-    transform: none !important; /* Prevent any transforms */
-    margin: 0 !important; /* Reset any margins */
+    transform: none !important;
+    margin: 0 !important;
     max-height: none !important;
     min-height: 40px !important;
     opacity: 1 !important;
@@ -1407,7 +1284,7 @@ textarea#task {
 }
 
 .sticky-downloads-bar.visible {
-    display: flex !important; /* Show when this class is added */
+    display: flex !important;
 }
 
 .download-options {
@@ -1432,8 +1309,8 @@ textarea#task {
     gap: 8px;
     padding: 6px 14px;
     border-radius: 20px;
-    background: rgba(78, 157, 221, 0.2);
-    color: #7DC7FF;
+    background: rgba(20, 184, 166, 0.2);
+    color: #2dd4bf;
     font-weight: 500;
     font-size: 0.9rem;
     cursor: pointer;
@@ -1442,7 +1319,7 @@ textarea#task {
 }
 
 .download-option-btn:hover {
-    background: rgba(78, 157, 221, 0.3);
+    background: rgba(20, 184, 166, 0.3);
     transform: translateY(-2px);
     text-decoration: none;
     color: #FFFFFF;
@@ -1458,29 +1335,25 @@ textarea#task {
     pointer-events: none;
 }
 
-/* Adjust for medium screens */
 @media (min-width: 769px) and (max-width: 1200px) {
     .feature-panel {
-        width: 280px; /* Slightly smaller on medium screens */
+        width: 280px;
     }
 
     .feature-card {
-        padding: 20px; /* Reduce padding on medium screens */
-        min-height: 150px; /* Smaller minimum height */
+        padding: 20px;
+        min-height: 150px;
     }
 
     .feature-icon {
-        width: 55px; /* Slightly smaller icon */
+        width: 55px;
         height: 55px;
         font-size: 24px;
     }
 }
 
-/* Media query adjustments for mobile */
-/* Styles were merged into the main mobile media query */
-
 .credits-bar a {
-    color: #7DC7FF;
+    color: #2dd4bf;
     font-weight: 500;
     text-decoration: none;
 }
@@ -1489,7 +1362,6 @@ textarea#task {
     text-decoration: underline;
 }
 
-/* Add WebSocket Panel Styles */
 .websocket-panel {
     position: fixed;
     top: 40px;
@@ -1499,7 +1371,7 @@ textarea#task {
     max-height: calc(100vh - 80px);
     background: rgba(18, 18, 24, 0.95);
     backdrop-filter: blur(10px);
-    border-right: 1px solid rgba(78, 174, 221, 0.3);
+    border-right: 1px solid rgba(20, 184, 166, 0.3);
     z-index: 1000;
     display: flex;
     flex-direction: column;
@@ -1518,7 +1390,7 @@ textarea#task {
     justify-content: space-between;
     align-items: center;
     padding: 15px;
-    border-bottom: 1px solid rgba(78, 157, 221, 0.3);
+    border-bottom: 1px solid rgba(20, 184, 166, 0.3);
 }
 
 .websocket-panel-header h3 {
@@ -1531,7 +1403,7 @@ textarea#task {
 
 .websocket-panel-header h3 i {
     margin-right: 10px;
-    color: #4E9DDD;
+    color: #14b8a6;
 }
 
 .websocket-panel-actions {
@@ -1553,7 +1425,7 @@ textarea#task {
 }
 
 .websocket-action-btn:hover {
-    background: rgba(78, 157, 221, 0.2);
+    background: rgba(20, 184, 166, 0.2);
     color: #FFFFFF;
 }
 
@@ -1607,11 +1479,10 @@ textarea#task {
 
 .status-divider {
     height: 1px;
-    background: rgba(78, 157, 221, 0.2);
+    background: rgba(20, 184, 166, 0.2);
     margin: 15px 0 20px;
 }
 
-/* Responsive adjustments for WebSocket panel */
 @media (max-width: 768px) {
     .websocket-panel {
         width: 100%;
@@ -1630,7 +1501,6 @@ textarea#task {
 }
 
 @media (max-width: 768px) {
-    /* Mobile styling for fixed download bar */
     .sticky-downloads-bar .credits-content {
         flex-direction: column;
         padding: 5px 10px;
@@ -1653,12 +1523,11 @@ textarea#task {
     }
 }
 
-/* Chat UI Styles (moved from inline styles) */
 .chat-container {
     margin-top: 40px;
     padding: 20px;
     border-radius: 10px;
-    background-color: rgba(255, 255, 255, 0.05);
+    background-color: rgba(20, 20, 28, 0.7);
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -1668,9 +1537,9 @@ textarea#task {
     margin-bottom: 20px;
     padding: 15px;
     border-radius: 8px;
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: transparent;
     scrollbar-width: thin;
-    scrollbar-color: #4e9ddd rgba(40, 40, 50, 0.7);
+    scrollbar-color: #14b8a6 rgba(40, 40, 50, 0.7);
 }
 
 .chat-messages::-webkit-scrollbar {
@@ -1683,13 +1552,13 @@ textarea#task {
 }
 
 .chat-messages::-webkit-scrollbar-thumb {
-    background-color: #4e9ddd;
+    background-color: #14b8a6;
     border-radius: 10px;
 }
 
 .chat-message {
     margin-bottom: 15px;
-    padding: 10px 15px;
+    padding: 12px 18px;
     border-radius: 10px;
     max-width: 80%;
     position: relative;
@@ -1703,7 +1572,7 @@ textarea#task {
 }
 
 .ai-message {
-    background-color: #4E9DDD;
+    background-color: #14b8a6;
     color: white;
     margin-right: auto;
     border-bottom-left-radius: 0;
@@ -1718,7 +1587,7 @@ textarea#task {
     flex-grow: 1;
     border-radius: 20px;
     padding: 10px 15px;
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: #2f3542;
     color: white;
     border: 1px solid rgba(255, 255, 255, 0.2);
     font-weight: 400;
@@ -1729,10 +1598,10 @@ textarea#task {
 }
 
 .chat-input:focus {
-    background-color: rgba(255, 255, 255, 0.4);
-    border-color: #4E9DDD;
-    box-shadow: 0 0 0 0.2rem rgba(78, 157, 221, 0.25);
-    color: #000000;
+    background-color: #3b4252;
+    border-color: #14b8a6;
+    box-shadow: 0 0 0 0.2rem rgba(20, 184, 166, 0.25);
+    color: white;
     font-weight: 500;
 }
 
@@ -1776,275 +1645,13 @@ textarea#task {
     50% { transform: scale(1); opacity: 1; }
 }
 
-/* Download buttons glow effect */
 .highlight-glow-download-button {
-    box-shadow: 0 0 15px #ffc107, 0 0 25px rgba(255, 193, 7, 0.5) !important;
+    box-shadow: 0 0 15px #14b8a6, 0 0 25px rgba(20, 184, 166, 0.5) !important;
     transform: translateY(-2px);
     transition: all 0.3s ease;
-    border-color: #ffc107 !important;
+    border-color: #14b8a6 !important;
 }
 
-/* --- Enhanced History Panel Styles --- */
-/* Improved layout and organization for history panel */
-.history-panel {
-    /* Keep existing styles */
-    background: rgba(22, 22, 30, 0.97);
-}
-
-/* Improved header with better visibility */
-.history-panel-header {
-    background: rgba(25, 25, 35, 0.95);
-    padding: 16px 20px;
-    border-bottom: 2px solid rgba(78, 157, 221, 0.5);
-}
-
-/* Standardized button container in header */
-.history-panel-actions {
-    display: flex;
-    gap: 8px;
-}
-
-/* Improved and consistent action buttons */
-.history-action-btn {
-    width: 36px;
-    height: 36px;
-    background: rgba(40, 40, 55, 0.8);
-    border: 1px solid rgba(78, 157, 221, 0.3);
-    color: #E4E4E4;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: all 0.2s ease;
-    cursor: pointer;
-    position: relative;
-}
-
-.history-action-btn:hover {
-    background: rgba(78, 157, 221, 0.2);
-    border-color: #4E9DDD;
-    transform: translateY(-2px);
-    color: #FFFFFF;
-}
-
-/* Add labels to buttons on hover for better UX */
-.history-action-btn::after {
-    content: attr(title);
-    position: absolute;
-    bottom: -30px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(40, 40, 55, 0.9);
-    color: #FFFFFF;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 12px;
-    white-space: nowrap;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.2s ease;
-    pointer-events: none;
-    z-index: 10;
-}
-
-.history-action-btn:hover::after {
-    opacity: 1;
-    visibility: visible;
-    bottom: -25px;
-}
-
-/* Improved search bar */
-.history-panel-search {
-    padding: 12px 16px;
-    border-bottom: 1px solid rgba(78, 157, 221, 0.2);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.history-panel-search input {
-    flex: 1;
-    background: rgba(30, 30, 40, 0.8);
-    border: 1px solid rgba(78, 157, 221, 0.3);
-    border-radius: 20px;
-    padding: 8px 15px;
-    color: #E4E4E4;
-    font-size: 0.9rem;
-    height: 40px;
-}
-
-.history-panel-search input:focus {
-    border-color: #4E9DDD;
-    box-shadow: 0 0 0 2px rgba(78, 157, 221, 0.2);
-    outline: none;
-}
-
-/* Filter area with improved buttons */
-.history-panel-filters {
-    padding: 12px 16px;
-    background: rgba(30, 30, 40, 0.4);
-    border-bottom: 1px solid rgba(78, 157, 221, 0.2);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.history-panel-filters select {
-    background: rgba(40, 40, 55, 0.8);
-    border: 1px solid rgba(78, 157, 221, 0.3);
-    border-radius: 20px;
-    padding: 8px 15px;
-    color: #E4E4E4;
-    font-size: 0.9rem;
-    max-width: 140px;
-    height: 40px;
-}
-
-/* Improved action buttons container in filters */
-.history-actions-container {
-    display: flex;
-    gap: 10px;
-    margin-left: auto;
-}
-
-/* Make history entries more visually appealing */
-.history-entry {
-    background: rgba(35, 35, 45, 0.7);
-    border-radius: 10px;
-    padding: 16px;
-    border-left: 3px solid #4E9DDD;
-    transition: all 0.25s ease;
-    position: relative;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-}
-
-.history-entry:hover {
-    background: rgba(45, 45, 60, 0.8);
-    transform: translateY(-2px) scale(1.01);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-}
-
-/* Better formatted entry header */
-.history-entry-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 12px;
-}
-
-/* Format link buttons consistently */
-.history-entry-format {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin: 10px 0;
-}
-
-.history-entry-format a.history-entry-action {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 6px 12px;
-    border-radius: 30px;
-    background: rgba(78, 157, 221, 0.15);
-    color: #E4E4E4;
-    font-size: 0.85rem;
-    text-decoration: none;
-    transition: all 0.2s ease;
-    border: 1px solid rgba(78, 157, 221, 0.3);
-}
-
-.history-entry-format a.history-entry-action:hover {
-    background: rgba(78, 157, 221, 0.3);
-    transform: translateY(-1px);
-    color: #FFFFFF;
-    border-color: rgba(78, 157, 221, 0.5);
-}
-
-/* Consistent icon styles for various file types */
-.history-entry-format a.history-entry-action i {
-    font-size: 0.9rem;
-}
-
-/* PDF icon */
-.history-entry-format a.history-entry-action i.fa-file-pdf {
-    color: #FF5252;
-}
-
-/* Word icon */
-.history-entry-format a.history-entry-action i.fa-file-word {
-    color: #4285F4;
-}
-
-/* Markdown icon */
-.history-entry-format a.history-entry-action i.fa-file-lines {
-    color: #42A5F5;
-}
-
-/* JSON icon */
-.history-entry-format a.history-entry-action i.fa-file-code {
-    color: #FFB300;
-}
-
-/* Improved delete button */
-.history-entry-actions {
-    position: absolute;
-    right: 12px;
-    bottom: 12px;
-    opacity: 0;
-    transition: all 0.2s ease;
-}
-
-.history-entry:hover .history-entry-actions {
-    opacity: 1;
-}
-
-.history-entry-actions .delete-entry {
-    width: 34px;
-    height: 34px;
-    background: rgba(220, 53, 69, 0.2);
-    border: 1px solid rgba(220, 53, 69, 0.3);
-    color: #dc3545;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s ease;
-}
-
-.history-entry-actions .delete-entry:hover {
-    background: rgba(220, 53, 69, 0.3);
-    border-color: rgba(220, 53, 69, 0.5);
-    transform: translateY(-2px);
-}
-
-/* Empty state styling */
-.history-panel-entries p.text-center {
-    padding: 20px;
-    color: #B8B8B8;
-    font-style: italic;
-}
-
-/* Responsive adjustments for history panel */
-@media (max-width: 768px) {
-    .history-panel {
-        width: 100%;
-    }
-
-    .history-action-btn::after {
-        display: none; /* Hide tooltips on mobile */
-    }
-
-    .history-panel-filters {
-        flex-wrap: wrap;
-    }
-
-    .history-actions-container {
-        margin-top: 8px;
-        margin-left: 0;
-    }
-}
-
-/* Report Actions and Download Buttons */
 .report-actions {
     display: flex;
     flex-wrap: wrap;
@@ -2069,20 +1676,20 @@ textarea#task {
     cursor: pointer;
     transition: all 0.2s ease;
     text-decoration: none;
-    border: 1px solid rgba(78, 157, 221, 0.2);
+    border: 1px solid rgba(20, 184, 166, 0.2);
 }
 
 .report-action-btn:hover {
-    background: rgba(78, 157, 221, 0.2);
+    background: rgba(20, 184, 166, 0.2);
     transform: translateY(-2px);
     text-decoration: none;
     color: #FFFFFF;
-    border-color: rgba(78, 157, 221, 0.5);
+    border-color: rgba(20, 184, 166, 0.5);
 }
 
 .report-action-btn i {
     font-size: 1rem;
-    color: #4E9DDD;
+    color: #14b8a6;
 }
 
 .report-action-btn.disabled {
@@ -2091,11 +1698,10 @@ textarea#task {
     pointer-events: none;
 }
 
-/* Expand Button */
 .expand-button {
     background: transparent;
     border: none;
-    color: #4E9DDD;
+    color: #14b8a6;
     font-size: 0.85rem;
     cursor: pointer;
     padding: 5px;
@@ -2111,18 +1717,17 @@ textarea#task {
 }
 
 .expand-button:hover {
-    background: rgba(78, 157, 221, 0.15);
-    color: #7DC7FF;
+    background: rgba(20, 184, 166, 0.15);
+    color: #2dd4bf;
 }
 
 .expand-button:focus {
     outline: none;
 }
 
-/* Expanded view mode - using best practices for centered modals with precise positioning */
 .expanded-view {
-    --modal-top: 50%; /* Default value, will be overridden by JS */
-    --modal-height: 85vh; /* Default value, will be overridden by JS */
+    --modal-top: 50%;
+    --modal-height: 85vh;
 
     position: fixed !important;
     top: var(--modal-top) !important;
@@ -2130,7 +1735,7 @@ textarea#task {
     height: var(--modal-height) !important;
     width: 90vw !important;
     max-width: 1200px !important;
-    transform: translateX(-50%) !important; /* Only transform X since Y is calculated precisely */
+    transform: translate(-50%, -50%) !important;
     z-index: 9000 !important;
     margin: 0 !important;
     border-radius: 12px !important;
@@ -2138,11 +1743,10 @@ textarea#task {
     overflow-y: auto !important;
     background-color: rgba(18, 18, 24, 0.98) !important;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
-    border: 1px solid rgba(78, 157, 221, 0.3) !important;
+    border: 1px solid rgba(20, 184, 166, 0.3) !important;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
 }
 
-/* Animation for modal appearance - modified to only transform X */
 @keyframes modalAppear {
     from {
         opacity: 0.8;
@@ -2154,24 +1758,21 @@ textarea#task {
     }
 }
 
-/* Ensure the expand toggle button is visible */
 .research-output-container h2,
 .report-container h2,
 #chatContainer h2 {
     position: relative;
-    padding-right: 50px; /* Make room for the expand button */
+    padding-right: 50px;
     display: flex;
     align-items: center;
 }
 
-/* Specific container styles in their normal state */
 #reportContainer,
 #output,
 #chatMessages {
     transition: all 0.3s ease;
 }
 
-/* Keep content intact when expanding/collapsing */
 .report-container,
 .research-output-container,
 #chatContainer {
@@ -2179,17 +1780,15 @@ textarea#task {
     position: relative;
 }
 
-/* Ensure expand button stays visible and in the correct position */
 .expand-button {
-    z-index: 100; /* Keep above other content */
+    z-index: 100;
     top: 0;
     right: 0;
-    transform: none; /* Reset any transform */
-    margin: 10px; /* Add some space */
+    transform: none;
+    margin: 10px;
     position: absolute;
 }
 
-/* Mobile responsiveness for expanded view */
 @media (max-width: 768px) {
     .expanded-view {
         top: 50% !important;
@@ -2210,40 +1809,35 @@ textarea#task {
     }
 }
 
-/* Voice input button styles */
 #voiceInputBtn {
     margin-right: 8px;
     border-radius: 20px;
-    width: 45px;
-    height: 45px;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba(40, 40, 50, 0.8);
-    border: 1px solid rgba(78, 157, 221, 0.3);
-    padding: 0;
+    background: #EDBF66 !important;
+    border: 1px solid #D8A854 !important;
+    padding: 10px;
+    font-size: 1.1rem;
+    line-height: 1;
     transition: all 0.2s ease;
 }
 
 #voiceInputBtn i {
     font-size: 1.2rem;
-    color: #E4E4E4;
+    color: #FFFFFF;
     transition: all 0.2s ease;
 }
 
 #voiceInputBtn:hover {
-    background-color: rgba(78, 157, 221, 0.2);
-    border-color: rgba(78, 157, 221, 0.5);
+    background: #D8A854 !important;
+    border-color: #C09040 !important;
 }
 
 #voiceInputBtn.listening {
-    background-color: rgba(220, 53, 69, 0.2);
-    border-color: rgba(220, 53, 69, 0.5);
+    background: rgba(220, 53, 69, 0.2) !important;
+    border-color: rgba(220, 53, 69, 0.5) !important;
     animation: pulse 1.5s infinite;
-}
-
-#voiceInputBtn.listening i {
-    color: #dc3545;
 }
 
 @keyframes pulse {
@@ -2258,7 +1852,6 @@ textarea#task {
     }
 }
 
-/* Toast notification styles */
 .toast-notification {
     position: fixed;
     bottom: 20px;
@@ -2274,7 +1867,7 @@ textarea#task {
     opacity: 0;
     transition: opacity 0.3s, transform 0.3s;
     pointer-events: none;
-    border-left: 3px solid #4E9DDD;
+    border-left: 3px solid #14b8a6;
 }
 
 .toast-notification.show {
@@ -2282,14 +1875,12 @@ textarea#task {
     transform: translate(-50%, -10px);
 }
 
-/* History panel action buttons container */
 .history-actions-container {
     display: flex;
     gap: 8px;
     margin-left: 10px;
 }
 
-/* Make sure buttons are properly sized and aligned */
 .history-action-btn {
     width: 32px;
     height: 32px;
@@ -2298,7 +1889,7 @@ textarea#task {
     justify-content: center;
     border-radius: 50%;
     background: rgba(40, 40, 50, 0.8);
-    border: 1px solid rgba(78, 157, 221, 0.3);
+    border: 1px solid rgba(20, 184, 166, 0.3);
     color: #E4E4E4;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -2307,12 +1898,11 @@ textarea#task {
 }
 
 .history-action-btn:hover {
-    background: rgba(78, 157, 221, 0.2);
-    border-color: #4E9DDD;
+    background: rgba(20, 184, 166, 0.2);
+    border-color: #14b8a6;
     transform: translateY(-2px);
 }
 
-/* Style for the file input (hidden) */
 #historyFileInput {
     position: absolute;
     width: 1px;
@@ -2324,7 +1914,6 @@ textarea#task {
     border: 0;
 }
 
-/* Task Textarea Auto-resize and Styles */
 #task {
     min-height: 38px;
     overflow-y: hidden;
@@ -2338,10 +1927,9 @@ textarea#task {
 }
 
 .expanded-view .expand-button i {
-    transform: rotate(180deg);
+    /* transform: rotate(180deg); */ /* Removed to prevent icon confusion */
 }
 
-/* Adjust specific containers in expanded view mode */
 .expanded-view #reportContainer {
     padding: 20px !important;
     font-size: 1.1rem !important;
@@ -2349,7 +1937,6 @@ textarea#task {
     overflow-y: auto !important;
     width: 100% !important;
     border: none !important;
-    background-color: transparent !important;
 }
 
 .expanded-view #chatMessages {
@@ -2367,15 +1954,12 @@ textarea#task {
     background-color: transparent !important;
 }
 
-/* Add back animation */
 .expanded-view {
     animation: modalAppear 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
 }
 
-/* Mobile responsiveness for expanded view - updated with custom properties */
 @media (max-width: 768px) {
     .expanded-view {
-        /* Keep using the custom properties, with smaller width */
         top: var(--modal-top) !important;
         left: 50% !important;
         height: var(--modal-height) !important;
@@ -2388,35 +1972,31 @@ textarea#task {
     .expanded-view #output,
     .expanded-view #reportContainer,
     .expanded-view #chatMessages {
-        /* Height will be controlled dynamically by JS */
         width: 100% !important;
         padding: 15px !important;
     }
 }
 
-/* Center the Get Started button in the landing section */
 .landing .btn {
     display: block;
     margin: 2rem auto;
     max-width: 220px;
 }
 
-/* Center and enhance the Research submit button */
 #researchForm input[type="submit"] {
     display: block;
     margin: 2rem auto;
     font-size: 1.2rem;
     padding: 15px 40px;
     min-width: 220px;
-    box-shadow: 0 6px 18px rgba(0, 123, 255, 0.4);
+    box-shadow: 0 6px 18px rgba(20, 184, 166, 0.4);
 }
 
 #researchForm input[type="submit"]:hover {
     transform: translateY(-4px);
-    box-shadow: 0 12px 25px rgba(0, 123, 255, 0.5);
+    box-shadow: 0 12px 25px rgba(20, 184, 166, 0.5);
 }
 
-/* Make sure buttons are responsive on mobile */
 @media (max-width: 768px) {
     .btn-primary, .btn-secondary {
         font-size: 1rem;
@@ -2428,5 +2008,307 @@ textarea#task {
         padding: 12px 30px;
         font-size: 1.1rem;
         min-width: 180px;
+    }
+}
+
+/* Image Dialog Styles */
+.image-dialog {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.75); /* Darker backdrop for better focus */
+    display: flex;
+    flex-direction: column; /* Align button below image */
+    justify-content: center;
+    align-items: center;
+    z-index: 10000; /* Ensure it's on top of everything */
+    padding: 20px; /* Add some padding around */
+    box-sizing: border-box; /* Include padding in width/height */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.image-dialog.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.image-dialog img {
+    max-width: 90%; /* Responsive image width */
+    max-height: 80%; /* Responsive image height */
+    object-fit: contain; /* Ensure image aspect ratio is maintained */
+    border-radius: 8px; /* Slightly rounded corners for the image */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); /* Subtle shadow for depth */
+}
+
+.image-dialog .close-btn {
+    background: linear-gradient(to right, #0d9488, #14b8a6);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-top: 20px; /* Space between image and button */
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(20, 184, 166, 0.3);
+}
+
+.image-dialog .close-btn:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(20, 184, 166, 0.4);
+}
+
+/* Ensure the dialog is not selectable when hidden */
+.image-dialog:not(.visible) {
+    pointer-events: none;
+}
+
+/* MCP Configuration Styles */
+.mcp-section {
+    margin-bottom: 1rem;
+}
+
+.mcp-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 5px;
+}
+
+.mcp-header label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.mcp-toggle {
+    margin: 0;
+}
+
+.mcp-info-btn {
+    background: none;
+    border: none;
+    color: #6c757d;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+}
+
+.mcp-info-btn:hover {
+    color: #007bff;
+    background-color: rgba(0, 123, 255, 0.1);
+}
+
+.mcp-config-section {
+    margin-top: 15px;
+    padding: 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+}
+
+.mcp-presets {
+    margin-bottom: 10px;
+}
+
+.preset-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 5px;
+}
+
+.preset-btn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    border: 1px solid #6c757d;
+    color: #6c757d;
+    background: white;
+}
+
+.preset-btn:hover {
+    border-color: #007bff;
+    color: #007bff;
+    background: rgba(0, 123, 255, 0.05);
+}
+
+.preset-btn i {
+    font-size: 0.9em;
+}
+
+.mcp-config-group {
+    margin-bottom: 10px;
+}
+
+.mcp-config-textarea {
+    font-family: 'Monaco', 'Consolas', 'Courier New', monospace;
+    font-size: 13px;
+    line-height: 1.4;
+    resize: vertical;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+    background-color: #f8f8f8;
+}
+
+.mcp-config-textarea:focus {
+    border-color: #007bff;
+    background-color: white;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.mcp-config-textarea.invalid {
+    border-color: #dc3545;
+    background-color: #fff5f5;
+}
+
+.mcp-config-textarea.valid {
+    border-color: #28a745;
+    background-color: #f0fff4;
+}
+
+.mcp-config-status {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
+    margin-bottom: 5px;
+}
+
+.mcp-status-text {
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.mcp-status-text.valid {
+    color: #28a745;
+}
+
+.mcp-status-text.invalid {
+    color: #dc3545;
+}
+
+#mcpFormatBtn {
+    font-size: 0.8rem;
+    padding: 4px 8px;
+}
+
+#mcpExampleLink {
+    color: #007bff;
+    text-decoration: none;
+}
+
+#mcpExampleLink:hover {
+    text-decoration: underline;
+}
+
+/* MCP Info Modal */
+.mcp-info-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.mcp-info-modal.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.mcp-info-content {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 25px;
+    border-radius: 12px;
+    max-width: 600px;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+    margin: 20px;
+}
+
+.mcp-info-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #6c757d;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.mcp-info-close:hover {
+    background-color: #f8f9fa;
+    color: #dc3545;
+}
+
+.mcp-info-content h3 {
+    margin-top: 0;
+    color: #333;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 10px;
+}
+
+.mcp-info-content p {
+    line-height: 1.6;
+    color: #555;
+}
+
+.mcp-info-content ul {
+    padding-left: 20px;
+    line-height: 1.6;
+}
+
+.mcp-info-content li {
+    margin-bottom: 8px;
+}
+
+.mcp-info-content .highlight {
+    color: #007bff;
+    font-weight: 600;
+}
+
+@media (max-width: 768px) {
+    .preset-buttons {
+        flex-direction: column;
+    }
+    
+    .preset-btn {
+        justify-content: center;
+    }
+    
+    .mcp-info-content {
+        margin: 10px;
+        padding: 20px;
+    }
+    
+    .mcp-config-status {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
     }
 }

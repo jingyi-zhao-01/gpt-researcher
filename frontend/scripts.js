@@ -60,6 +60,9 @@ const GPTResearcher = (() => {
     // Initialize WebSocket monitoring panel
     initWebSocketPanel();
 
+    // Initialize MCP functionality
+    initMCPSection();
+
     // The download bar is now fixed in place with CSS
     // No need to set display property here
 
@@ -551,6 +554,11 @@ const GPTResearcher = (() => {
       entryElement.className = 'history-entry';
       entryElement.setAttribute('data-id', index);
 
+      // Make the entire entry clickable to load it
+      entryElement.addEventListener('click', () => {
+        loadResearchEntry(index);
+      });
+
       // Format timestamp if available
       let timestampHTML = '';
       if (entry.timestamp) {
@@ -606,20 +614,72 @@ const GPTResearcher = (() => {
     if (!entry) return;
 
     // Fill form with the entry data
-    document.getElementById('task').value = entry.task;
-    document.querySelector('select[name="report_type"]').value = entry.reportType;
-    document.querySelector('select[name="report_source"]').value = entry.reportSource;
-    document.querySelector('select[name="tone"]').value = entry.tone;
-
-    if (entry.queryDomains && entry.queryDomains.length > 0) {
-      document.querySelector('input[name="query_domains"]').value = entry.queryDomains.join(', ');
+    document.getElementById('task').value = entry.prompt; // Changed from entry.task for consistency
+    
+    // Check if report_type, report_source, and tone are in entry, otherwise use defaults or skip
+    const reportTypeSelect = document.querySelector('select[name="report_type"]');
+    if (reportTypeSelect && entry.reportType) {
+        reportTypeSelect.value = entry.reportType;
+    } else if (reportTypeSelect) {
+        reportTypeSelect.value = reportTypeSelect.options[0].value; // Default to first option
     }
 
+    const reportSourceSelect = document.querySelector('select[name="report_source"]');
+    if (reportSourceSelect && entry.reportSource) {
+        reportSourceSelect.value = entry.reportSource;
+    } else if (reportSourceSelect) {
+        reportSourceSelect.value = reportSourceSelect.options[0].value; // Default to first option
+    }
+
+    const toneSelect = document.querySelector('select[name="tone"]');
+    if (toneSelect && entry.tone) {
+        toneSelect.value = entry.tone;
+    } else if (toneSelect) {
+        toneSelect.value = toneSelect.options[0].value; // Default to first option
+    }
+
+    const queryDomainsInput = document.querySelector('input[name="query_domains"]');
+    if (queryDomainsInput) {
+        if (entry.queryDomains && Array.isArray(entry.queryDomains) && entry.queryDomains.length > 0) {
+            queryDomainsInput.value = entry.queryDomains.join(', ');
+        } else {
+            queryDomainsInput.value = ''; // Clear if not present
+        }
+    }
+
+    // Clear current research/report areas
+    document.getElementById('output').innerHTML = '';
+    document.getElementById('reportContainer').innerHTML = '';
+    document.getElementById('selectedImagesContainer').innerHTML = '';
+    document.getElementById('selectedImagesContainer').style.display = 'none';
+
+    // Hide download bar and chat
+    const stickyDownloadsBar = document.getElementById('stickyDownloadsBar');
+    if (stickyDownloadsBar) {
+        stickyDownloadsBar.classList.remove('visible');
+    }
+    const chatContainer = document.getElementById('chatContainer');
+    if (chatContainer) {
+        chatContainer.style.display = 'none';
+    }
+
+    // Reset UI state and report-specific buttons
+    updateState('initial'); // This will hide copy buttons etc.
+
     // Close the history panel
-    document.getElementById('historyPanel').classList.remove('open');
+    const historyPanel = document.getElementById('historyPanel');
+    if (historyPanel) {
+        historyPanel.classList.remove('open');
+    }
 
     // Scroll to the form
-    document.getElementById('form').scrollIntoView({ behavior: 'smooth' });
+    const formElement = document.getElementById('form');
+    if (formElement) {
+        formElement.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Inform user
+    showToast('Research parameters loaded. You can start the research again.');
   }
 
   // Copy entry content to clipboard
@@ -748,11 +808,14 @@ const GPTResearcher = (() => {
       output: '🧙‍♂️ Gathering information and analyzing your research topic...',
     })
 
-    // Directly scroll to the bottom of the page - exactly once per click
-    window.scrollTo({
-      top: document.body.scrollHeight,
-      behavior: 'smooth'
-    });
+    // Scroll to the "Research Progress" section
+    const researchOutputContainer = document.querySelector('.research-output-container');
+    if (researchOutputContainer) {
+        researchOutputContainer.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+        });
+    }
 
     dispose_socket = listenToSockEvents() // Assign the new dispose function
   }
@@ -816,32 +879,17 @@ const GPTResearcher = (() => {
         // Get the current report_type
         const report_type = document.querySelector('select[name="report_type"]').value;
 
-        // Determine if we're using detailed_report (the only one that needs special handling)
+        // Determine if we're using detailed_report
         const isDetailedReport = report_type === 'detailed_report';
 
         if (isDetailedReport) {
-          // Special handling for detailed_report
-          // Add to allReports for final display
-          allReports += data.output;
-
-          // Handle currentReport differently based on if it's the first report
-          if (isFirstReport) {
-            currentReport = data.output;
-            isFirstReport = false;
-
-            // For the first report, write directly
-            const reportData = { output: currentReport, type: 'report' };
-            writeReport(reportData, converter, false, true); // Use append=true
-          } else {
-            // For subsequent reports in detailed_report, replace with just this report
-            currentReport = data.output;
-            const reportData = { output: currentReport, type: 'report' };
-            writeReport(reportData, converter, false, false); // Use append=false
-          }
+          allReports += data.output; // Accumulate raw markdown
+          // Always render the HTML of *all accumulated markdown* for detailed reports during streaming.
+          // writeReport will replace the container's content.
+          writeReport({ output: allReports, type: 'report' }, converter, false, false);
         } else {
-          // For all other report types, always append
-          const reportData = { output: data.output, type: 'report' };
-          writeReport(reportData, converter, false, true); // Use append=true
+          // For all other report types, append HTML of current chunk to the container.
+          writeReport({ output: data.output, type: 'report' }, converter, false, true); // append = true
         }
       } else if (data.type === 'path') {
         updateState('finished')
@@ -939,6 +987,13 @@ const GPTResearcher = (() => {
         query_domains: query_domains,
       }
 
+      // Add MCP configuration if enabled
+      const mcpData = collectMCPData();
+      if (mcpData) {
+        Object.assign(requestData, mcpData);
+        console.log('Including MCP configuration:', mcpData);
+      }
+
       // Store the request data for potential reconnection
       lastRequestData = requestData;
 
@@ -981,10 +1036,13 @@ const GPTResearcher = (() => {
   }
 
   const addAgentResponse = (data) => {
-    const output = document.getElementById('output')
-    output.innerHTML += '<div class="agent_response">' + data.output + '</div>'
-    output.scrollTop = output.scrollHeight
-    output.style.display = 'block'
+    const output = document.getElementById('output');
+    const responseDiv = document.createElement('div');
+    responseDiv.className = 'agent_response';
+    responseDiv.innerHTML = data.output; // Assuming data.output is safe HTML or simple text from agent
+    output.appendChild(responseDiv);
+    output.scrollTop = output.scrollHeight;
+    output.style.display = 'block';
   }
 
   const writeReport = (data, converter, isFinal = false, append = false) => {
@@ -1262,30 +1320,46 @@ const GPTResearcher = (() => {
   }
 
   const showImageDialog = (imageUrl) => {
-    const dialog = document.createElement('div');
-    dialog.className = 'image-dialog';
+    let dialog = document.querySelector('.image-dialog');
+    if (!dialog) {
+        dialog = document.createElement('div');
+        dialog.className = 'image-dialog';
 
-    const img = document.createElement('img');
-    img.src = imageUrl;
-    img.alt = 'Full-size Research Image';
+        const img = document.createElement('img');
+        img.alt = 'Full-size Research Image';
 
-    const closeBtn = document.createElement('button');
-    closeBtn.textContent = 'Close';
-    closeBtn.onclick = () => document.body.removeChild(dialog);
+        const closeBtn = document.createElement('button');
+        closeBtn.textContent = 'Close';
+        closeBtn.className = 'close-btn'; // Added class for styling
 
-    dialog.appendChild(img);
-    dialog.appendChild(closeBtn);
-    document.body.appendChild(dialog);
-  }
+        dialog.appendChild(img);
+        dialog.appendChild(closeBtn);
+        document.body.appendChild(dialog);
 
-  //document.addEventListener('DOMContentLoaded', init)
-
-  const scrollToOutput = () => {
-    const outputElement = document.getElementById('output')
-    if (outputElement) {
-      outputElement.scrollIntoView({ behavior: 'smooth' })
+        closeBtn.onclick = () => {
+            dialog.classList.remove('visible');
+        };
+        // Close on clicking backdrop
+        dialog.addEventListener('click', (e) => {
+            if (e.target === dialog) {
+                dialog.classList.remove('visible');
+            }
+        });
     }
-  }
+
+    const imgElement = dialog.querySelector('img');
+    imgElement.src = imageUrl;
+    dialog.classList.add('visible');
+
+    // Close with Escape key
+    const escapeKeyListener = (e) => {
+        if (e.key === 'Escape') {
+            dialog.classList.remove('visible');
+            document.removeEventListener('keydown', escapeKeyListener);
+        }
+    };
+    document.addEventListener('keydown', escapeKeyListener);
+}
 
   // Function to show download bar and enable buttons
   const showDownloadPanels = () => {
@@ -1967,12 +2041,15 @@ const GPTResearcher = (() => {
     // Toggle expanded-view class
     element.classList.toggle('expanded-view');
 
-    // Change button icon based on state
-    const button = element.querySelector('.expand-button i');
-    if (button) {
+    // Change button icon and title based on state
+    const buttonIcon = element.querySelector('.expand-button i');
+    const button = element.querySelector('.expand-button');
+
+    if (buttonIcon && button) {
       if (element.classList.contains('expanded-view')) {
-        button.classList.remove('fa-expand-alt');
-        button.classList.add('fa-compress-alt');
+        buttonIcon.classList.remove('fa-compress-alt');
+        buttonIcon.classList.add('fa-compress-alt');
+        button.title = 'Collapse'; // Update title to Collapse
 
         // Find content containers and expand their height
         const contentContainers = element.querySelectorAll('#reportContainer, #output, #chatMessages');
@@ -1987,8 +2064,9 @@ const GPTResearcher = (() => {
           }
         });
       } else {
-        button.classList.remove('fa-compress-alt');
-        button.classList.add('fa-expand-alt');
+        buttonIcon.classList.remove('fa-compress-alt');
+        buttonIcon.classList.add('fa-expand-alt');
+        button.title = 'Expand'; // Update title to Expand
 
         // Reset heights back to original when collapsed
         const contentContainers = element.querySelectorAll('#reportContainer, #output, #chatMessages');
@@ -2000,6 +2078,348 @@ const GPTResearcher = (() => {
       }
     }
   }
+
+  // MCP Configuration Management
+  
+  // Initialize MCP functionality
+  const initMCPSection = () => {
+    const mcpEnabled = document.getElementById('mcpEnabled');
+    const mcpConfigSection = document.getElementById('mcpConfigSection');
+    const mcpInfoBtn = document.getElementById('mcpInfoBtn');
+    const mcpConfig = document.getElementById('mcpConfig');
+    const mcpFormatBtn = document.getElementById('mcpFormatBtn');
+    const mcpExampleLink = document.getElementById('mcpExampleLink');
+
+    if (!mcpEnabled || !mcpConfigSection) {
+      console.warn('MCP elements not found');
+      return;
+    }
+
+    // Toggle MCP config section
+    mcpEnabled.addEventListener('change', () => {
+      if (mcpEnabled.checked) {
+        mcpConfigSection.style.display = 'block';
+        updateRetrieverForMCP(true);
+      } else {
+        mcpConfigSection.style.display = 'none';
+        updateRetrieverForMCP(false);
+      }
+    });
+
+    // MCP info modal
+    if (mcpInfoBtn) {
+      mcpInfoBtn.addEventListener('click', showMCPInfo);
+    }
+
+    // JSON validation and formatting
+    if (mcpConfig) {
+      mcpConfig.addEventListener('input', validateMCPConfig);
+      mcpConfig.addEventListener('blur', validateMCPConfig);
+    }
+
+    if (mcpFormatBtn) {
+      mcpFormatBtn.addEventListener('click', formatMCPConfig);
+    }
+
+    if (mcpExampleLink) {
+      mcpExampleLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        showMCPExample();
+      });
+    }
+
+    // Preset buttons
+    const presetButtons = document.querySelectorAll('.preset-btn');
+    presetButtons.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const preset = e.currentTarget.dataset.preset;
+        addMCPPreset(preset);
+      });
+    });
+
+    // Create MCP info modal
+    createMCPInfoModal();
+
+    // Initial validation
+    validateMCPConfig();
+  };
+
+  // Validate MCP JSON configuration
+  const validateMCPConfig = () => {
+    const mcpConfig = document.getElementById('mcpConfig');
+    const mcpConfigStatus = document.getElementById('mcpConfigStatus');
+    
+    if (!mcpConfig || !mcpConfigStatus) return;
+
+    const configText = mcpConfig.value.trim();
+    
+    if (!configText || configText === '[]') {
+      mcpConfig.className = 'form-control mcp-config-textarea';
+      mcpConfigStatus.textContent = 'Empty configuration';
+      mcpConfigStatus.className = 'mcp-status-text';
+      return true;
+    }
+
+    try {
+      const parsed = JSON.parse(configText);
+      
+      if (!Array.isArray(parsed)) {
+        throw new Error('Configuration must be an array');
+      }
+
+      // Validate each server config
+      const errors = [];
+      parsed.forEach((server, index) => {
+        if (!server.name) {
+          errors.push(`Server ${index + 1}: missing name`);
+        }
+        if (!server.command && !server.connection_url) {
+          errors.push(`Server ${index + 1}: missing command or connection_url`);
+        }
+      });
+
+      if (errors.length > 0) {
+        throw new Error(errors.join('; '));
+      }
+
+      mcpConfig.className = 'form-control mcp-config-textarea valid';
+      mcpConfigStatus.textContent = `Valid JSON ✓ (${parsed.length} server${parsed.length !== 1 ? 's' : ''})`;
+      mcpConfigStatus.className = 'mcp-status-text valid';
+      return true;
+
+    } catch (error) {
+      mcpConfig.className = 'form-control mcp-config-textarea invalid';
+      mcpConfigStatus.textContent = `Invalid JSON: ${error.message}`;
+      mcpConfigStatus.className = 'mcp-status-text invalid';
+      return false;
+    }
+  };
+
+  // Format MCP JSON configuration
+  const formatMCPConfig = () => {
+    const mcpConfig = document.getElementById('mcpConfig');
+    if (!mcpConfig) return;
+
+    try {
+      const parsed = JSON.parse(mcpConfig.value.trim() || '[]');
+      mcpConfig.value = JSON.stringify(parsed, null, 2);
+      validateMCPConfig();
+      showToast('JSON formatted successfully!');
+    } catch (error) {
+      showToast('Cannot format invalid JSON');
+    }
+  };
+
+  // Show MCP configuration example
+  const showMCPExample = () => {
+    const exampleConfig = [
+      {
+        "name": "github",
+        "command": "npx",
+        "args": ["-y", "@modelcontextprotocol/server-github"],
+        "env": {
+          "GITHUB_PERSONAL_ACCESS_TOKEN": "your_github_token_here"
+        }
+      },
+      {
+        "name": "filesystem",
+        "command": "npx",
+        "args": ["-y", "@modelcontextprotocol/server-filesystem", "/path/to/allowed/directory"],
+        "env": {}
+      }
+    ];
+
+    const mcpConfig = document.getElementById('mcpConfig');
+    if (mcpConfig) {
+      mcpConfig.value = JSON.stringify(exampleConfig, null, 2);
+      validateMCPConfig();
+      showToast('Example configuration loaded!');
+    }
+  };
+
+  // Update retriever configuration for MCP
+  const updateRetrieverForMCP = (enableMCP) => {
+    if (enableMCP) {
+      showToast('MCP enabled - will be included in research process');
+    } else {
+      showToast('MCP disabled - using web search only');
+    }
+  };
+
+  // Show MCP information modal
+  const showMCPInfo = () => {
+    const modal = document.getElementById('mcpInfoModal');
+    if (modal) {
+      modal.classList.add('visible');
+    }
+  };
+
+  // Create MCP info modal
+  const createMCPInfoModal = () => {
+    if (document.getElementById('mcpInfoModal')) return;
+
+    const modal = document.createElement('div');
+    modal.id = 'mcpInfoModal';
+    modal.className = 'mcp-info-modal';
+    
+    modal.innerHTML = `
+      <div class="mcp-info-content">
+        <button class="mcp-info-close" onclick="closeMCPInfo()">
+          <i class="fas fa-times"></i>
+        </button>
+        <h3>Model Context Protocol (MCP)</h3>
+        <p>MCP enables GPT Researcher to connect with external tools and data sources through a standardized protocol.</p>
+        
+        <h4 class="highlight">Benefits:</h4>
+        <ul>
+          <li><span class="highlight">Access Local Data:</span> Connect to databases, file systems, and APIs</li>
+          <li><span class="highlight">Use External Tools:</span> Integrate with web services and third-party tools</li>
+          <li><span class="highlight">Extend Capabilities:</span> Add custom functionality through MCP servers</li>
+          <li><span class="highlight">Maintain Security:</span> Controlled access with proper authentication</li>
+        </ul>
+
+        <h4 class="highlight">Quick Start:</h4>
+        <ul>
+          <li>Enable MCP using the checkbox above</li>
+          <li>Click a preset to add pre-configured servers to the JSON</li>
+          <li>Or paste your own MCP configuration as a JSON array</li>
+          <li>Start your research - MCP will run with optimal settings</li>
+        </ul>
+
+        <h4 class="highlight">Configuration Format:</h4>
+        <p>Each MCP server should be a JSON object with these properties:</p>
+        <ul>
+          <li><span class="highlight">name:</span> Unique identifier (e.g., "github", "filesystem")</li>
+          <li><span class="highlight">command:</span> Command to run the server (e.g., "npx", "python")</li>
+          <li><span class="highlight">args:</span> Array of arguments (e.g., ["-y", "@modelcontextprotocol/server-github"])</li>
+          <li><span class="highlight">env:</span> Object with environment variables (e.g., {"API_KEY": "your_key"})</li>
+        </ul>
+      </div>
+    `;
+
+    document.body.appendChild(modal);
+
+    // Close modal when clicking outside
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.classList.remove('visible');
+      }
+    });
+
+    // Close with Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('visible')) {
+        modal.classList.remove('visible');
+      }
+    });
+  };
+
+  // Close MCP info modal
+  window.closeMCPInfo = () => {
+    const modal = document.getElementById('mcpInfoModal');
+    if (modal) {
+      modal.classList.remove('visible');
+    }
+  };
+
+  // Add MCP preset configurations
+  const addMCPPreset = (preset) => {
+    const presets = {
+      github: {
+        "name": "github",
+        "command": "npx",
+        "args": ["-y", "@modelcontextprotocol/server-github"],
+        "env": {
+          "GITHUB_PERSONAL_ACCESS_TOKEN": "your_github_token_here"
+        }
+      },
+      tavily: {
+        "name": "tavily",
+        "command": "npx",
+        "args": ["-y", "tavily-mcp@0.1.2"],
+        "env": {
+          "TAVILY_API_KEY": "your_tavily_api_key_here"
+        }
+      },
+      filesystem: {
+        "name": "filesystem",
+        "command": "npx",
+        "args": ["-y", "@modelcontextprotocol/server-filesystem", "/path/to/allowed/directory"],
+        "env": {}
+      }
+    };
+
+    const config = presets[preset];
+    if (!config) return;
+
+    const mcpConfig = document.getElementById('mcpConfig');
+    if (!mcpConfig) return;
+
+    try {
+      let currentConfig = [];
+      const currentText = mcpConfig.value.trim();
+      
+      if (currentText && currentText !== '[]') {
+        currentConfig = JSON.parse(currentText);
+      }
+
+      // Check if server already exists
+      const existingIndex = currentConfig.findIndex(server => server.name === config.name);
+      
+      if (existingIndex !== -1) {
+        // Replace existing server
+        currentConfig[existingIndex] = config;
+        showToast(`Updated ${preset} MCP server configuration`);
+      } else {
+        // Add new server
+        currentConfig.push(config);
+        showToast(`Added ${preset} MCP server configuration`);
+      }
+
+      mcpConfig.value = JSON.stringify(currentConfig, null, 2);
+      validateMCPConfig();
+
+    } catch (error) {
+      console.error('Error adding preset:', error);
+      showToast('Error adding preset configuration');
+    }
+  };
+
+  // Collect MCP configuration data
+  const collectMCPData = () => {
+    const mcpEnabled = document.getElementById('mcpEnabled');
+    if (!mcpEnabled || !mcpEnabled.checked) {
+      return null;
+    }
+
+    const mcpConfig = document.getElementById('mcpConfig');
+    
+    if (!mcpConfig) {
+      console.warn('MCP config element not found for data collection');
+      return null;
+    }
+
+    // Validate configuration before collecting
+    if (!validateMCPConfig()) {
+      showToast('Invalid MCP configuration - please fix errors before submitting');
+      return null;
+    }
+
+    try {
+      const configText = mcpConfig.value.trim();
+      const mcpConfigs = configText && configText !== '[]' ? JSON.parse(configText) : [];
+
+      return {
+        mcp_enabled: true,
+        mcp_strategy: "fast", // Always use "fast" strategy as default
+        mcp_configs: mcpConfigs
+      };
+    } catch (error) {
+      console.error('Error collecting MCP data:', error);
+      showToast('Error processing MCP configuration');
+      return null;
+    }
+  };
 
   return {
     init,
